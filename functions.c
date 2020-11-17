@@ -35,25 +35,28 @@ char **split_command(char *buffer)
 
 	tokens = malloc(buffsize * sizeof(char *));
 	if (tokens == NULL)
-	{
+	{	
 		perror("Unable to allocate\n");
 		exit(EXIT_FAILURE);
 	}
 	token = strtok(buffer, TOKEN_DELIM);
-	while (token != NULL)
+	if (is_builtin(token) == FALSE)
 	{
-		tokens[position++] = token;
-		if (position >= buffsize)
+		while (token != NULL)
 		{
-			buffsize += TOKEN_BUFFSIZE;
-			tokens = realloc(tokens,  buffsize * sizeof(char *));
-			if (tokens == NULL)
+			tokens[position++] = token;
+			if (position >= buffsize)
 			{
-				perror("Unable to allocate\n");
-				exit(EXIT_FAILURE);
+				buffsize += TOKEN_BUFFSIZE;
+				tokens = realloc(tokens,  buffsize * sizeof(char *));
+				if (tokens == NULL)
+				{
+					perror("Unable to allocate\n");
+					exit(EXIT_FAILURE);
+				}
 			}
-		}
 		token = strtok(NULL, TOKEN_DELIM);
+		}
 	}
 	tokens[position] = NULL;
 	return (tokens);
@@ -83,4 +86,23 @@ int exc_argument(char **args)
 	}
 
 	return (1);
+}
+
+int is_builtin(char *token)
+{
+	int i = 0;
+	op_t options[] = {
+	{"exit", exit_func}, {"env", env_func}, {NULL, NULL}
+	};
+
+	while (options[i].cmd != NULL)
+	{
+		if((_strcmp(token, options[i].cmd)) == 0)
+		{
+			options[i].func();
+			return (TRUE);
+		}
+		i++;
+	}
+	return (FALSE);
 }
