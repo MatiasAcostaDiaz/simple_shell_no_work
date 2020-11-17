@@ -18,9 +18,13 @@ int _strcmp(char *s1, char *s2);
 void print_string(char *);
 void exit_func(void);
 void env_func(void);
+char *find_path(void);
+char *full_path(char *);
+char *_strcat(char *dest, char *src)
+char *search_in_path(char *path, char *command);
 /**
  * struct op - Short description
- * @c: character
+ * @cmd: the name of the command
  * @func: pointer to func
  *
  * Description: Longer description

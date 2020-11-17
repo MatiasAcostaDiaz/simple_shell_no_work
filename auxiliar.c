@@ -9,11 +9,11 @@
 int _strlen(char *s)
 {
 
-int i = 0;
+	int i = 0;
 
-while (*(s + i) != 0)
-	i++;
-return (i);
+	while (*(s + i) != 0)
+		i++;
+	return (i);
 }
 
 /**
@@ -46,4 +46,26 @@ void print_string(char *string)
 		i++;
 	}
 	write(1, buffer, count);
+}
+
+/**
+ * _strcat - function that append the contain in src in the buffer of dest
+ * @dest: the destination to append
+ * @src: the text to copy
+ * Return: a char pointer
+ */
+
+char *_strcat(char *dest, char *src)
+{
+	int len = 0, i = 0;
+
+	while (*(dest + len) != 0)
+		len++;
+	while (*(src + i) != 0)
+	{
+		dest[len + i] = src[i];
+		i++;
+	}
+	dest[len + i + 1] = '\0';
+	return (dest);
 }
