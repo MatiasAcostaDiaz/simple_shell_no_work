@@ -7,5 +7,5 @@ void exit_func(void)
 
 void env_func(void)
 {
-	printf("env func");
+	printf("env func\n");
 }
