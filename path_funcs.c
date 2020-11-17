@@ -9,7 +9,7 @@ char *find_path(void)
 		perror("Unable to allocate");
 	while (environ[i] != NULL)
 	{
-		for(j = 0; j < 4; j++)
+		for (j = 0; j < 4; j++)
 		{
 			buffer[j] = environ[i][j];
 		}
@@ -31,38 +31,29 @@ char *full_path(char *path)
 	return (copy);
 }
 
-char *split_path(char *path, char *arg)
+char *split_path(char *command)
 {
-	int position = 0, buffsize = 64;
-	char **tokens, *token;
+	char *token, *path, *fpath;
 
-	tokens = malloc(buffsize * sizeof(char *));
-	if (tokens == NULL)
-	{	
+	path = find_path();
+	fpath = malloc((_strlen(path) + _strlen(command) + 2) *sizeof(char));
+	if (fpath == NULL)
 		perror("Unable to allocate\n");
-		exit(EXIT_FAILURE);
-	}
 	token = strtok(path, ":");
+	fpath = strcat(token, "/");
+	fpath = strcat(token, command);
+	printf("the token is %s\n", fpath);
+	//search_in_path(token, command);
 	while (token != NULL)
 	{
-		tokens[position++] = token;
-		if (position >= buffsize)
-		{
-			buffsize += 64;
-			tokens = realloc(tokens,  buffsize * sizeof(char *));
-			if (tokens == NULL)
-			{
-				perror("Unable to allocate\n");
-				exit(EXIT_FAILURE);
-			}
-		}
 		token = strtok(NULL, ":");
+		if (token != NULL)
+		{
+			fpath = strcat(token, "/");
+			fpath = strcat(token, command);
+		}
+			//search_in_path(token, command);
+			printf("the token is %s\n",token);
 	}
-	tokens[position] = NULL;
-	return (tokens);
-}
-
-int *search_in_path(char *path, char *arg)
-{
-	
+	return (NULL);
 }

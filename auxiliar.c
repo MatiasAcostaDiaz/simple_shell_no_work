@@ -58,14 +58,17 @@ void print_string(char *string)
 char *_strcat(char *dest, char *src)
 {
 	int len = 0, i = 0;
+	char *cdest, *csrc;
 
-	while (*(dest + len) != 0)
+	cdest = dest;
+	csrc = src;
+	while (*(cdest + len) != 0)
 		len++;
-	while (*(src + i) != 0)
+	while (*(csrc + i) != 0)
 	{
-		dest[len + i] = src[i];
+		cdest[len + i] = csrc[i];
 		i++;
 	}
-	dest[len + i + 1] = '\0';
-	return (dest);
+	cdest[len + i + 1] = '\0';
+	return (cdest);
 }

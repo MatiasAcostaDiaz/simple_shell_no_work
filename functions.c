@@ -20,7 +20,7 @@ char *read_command(void)
 	{
 		if (c == EOF)
 		{
-			write(1,"\n",1);
+			write(1, "\n", 1);
 			exit(EXIT_SUCCESS);
 		}
 		perror("An error ocurred");
@@ -35,7 +35,7 @@ char **split_command(char *buffer)
 
 	tokens = malloc(buffsize * sizeof(char *));
 	if (tokens == NULL)
-	{	
+	{
 		perror("Unable to allocate\n");
 		exit(EXIT_FAILURE);
 	}
@@ -97,7 +97,7 @@ int is_builtin(char *token)
 
 	while (options[i].cmd != NULL)
 	{
-		if((_strcmp(token, options[i].cmd)) == 0)
+		if ((_strcmp(token, options[i].cmd)) == 0)
 		{
 			options[i].func();
 			return (TRUE);

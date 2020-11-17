@@ -20,8 +20,9 @@ void exit_func(void);
 void env_func(void);
 char *find_path(void);
 char *full_path(char *);
-char *_strcat(char *dest, char *src)
-char *search_in_path(char *path, char *command);
+char *_strcat(char *dest, char *src);
+int search_in_path(char *path, char *command);
+char *split_path(char *command);
 /**
  * struct op - Short description
  * @cmd: the name of the command
