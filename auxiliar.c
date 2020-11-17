@@ -32,3 +32,18 @@ int _strcmp(char *s1, char *s2)
 	}
 	return (*s1 - *s2);
 }
+
+void print_string(char *string)
+{
+	int i = 0, count = 0;
+	char *buffer;
+
+	count = _strlen(string);
+	buffer = (char *)malloc(sizeof(char) * count);
+	while (i < count)
+	{
+		buffer[i] = string[i];
+		i++;
+	}
+	write(1, buffer, count);
+}

@@ -9,11 +9,13 @@
 #define TRUE 1
 #define FALSE 0
 #define BUFFSIZE 1024
+extern char **environ;
 int _strlen(char *s);
 char *read_command(void);
 char **split_command(char *);
 int exc_argument(char **);
 int _strcmp(char *s1, char *s2);
+void print_string(char *);
 void exit_func(void);
 void env_func(void);
 /**

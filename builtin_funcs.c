@@ -7,5 +7,13 @@ void exit_func(void)
 
 void env_func(void)
 {
-	printf("env func\n");
+	int i;
+
+	while(environ[i] != NULL)
+	{
+		print_string(environ[i]);
+		write(1, "\n", 1);
+		i++;
+	}
+
 }
