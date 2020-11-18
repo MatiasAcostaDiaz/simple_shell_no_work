@@ -46,6 +46,7 @@ void print_string(char *string)
 		i++;
 	}
 	write(1, buffer, count);
+	free(buffer);
 }
 
 /**

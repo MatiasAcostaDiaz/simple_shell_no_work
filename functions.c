@@ -3,6 +3,10 @@
 #define TOKEN_BUFFSIZE 64
 #define TOKEN_DELIM " \t\r\n\a"
 
+static volatile int keep_running = 1;
+
+
+
 char *read_command(void)
 {
 	char *buffer;
@@ -16,15 +20,16 @@ char *read_command(void)
 		exit(EXIT_FAILURE);
 	}
 	c = getline(&buffer, &buffsize, stdin);
-	if (c == -1)
-	{
-		if (c == EOF)
+		if (c == -1)
 		{
-			write(1, "\n", 1);
-			exit(EXIT_SUCCESS);
+			if (c == EOF)
+			{
+				write(1, "\n", 1);
+				free(buffer);
+				exit(EXIT_SUCCESS);
+			}
+			perror("An error ocurred");
 		}
-		perror("An error ocurred");
-	}
 	return (buffer);
 }
 

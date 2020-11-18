@@ -33,27 +33,28 @@ char *full_path(char *path)
 
 char *split_path(char *command)
 {
-	char *token, *path, *fpath;
+	char *token = NULL, *fpath, *path;
+	struct stat fileStat;
 
 	path = find_path();
-	fpath = malloc((_strlen(path) + _strlen(command) + 2) *sizeof(char));
-	if (fpath == NULL)
-		perror("Unable to allocate\n");
 	token = strtok(path, ":");
-	fpath = strcat(token, "/");
-	fpath = strcat(token, command);
-	printf("the token is %s\n", fpath);
-	//search_in_path(token, command);
+
+	fpath = malloc(sizeof(char) * BUFFSIZE);
+	if (fpath == NULL)
+		return (NULL);
 	while (token != NULL)
 	{
-		token = strtok(NULL, ":");
-		if (token != NULL)
+		fpath[0] = '\0';
+		fpath = strcat(fpath, token);
+		fpath = strcat(fpath, "/");
+		fpath = strcat(fpath, command);
+		printf("COMMAND 0 : %s and path: %s\n", command, fpath);
+		if (stat(fpath, &fileStat) == 0)
 		{
-			fpath = strcat(token, "/");
-			fpath = strcat(token, command);
+			printf("se encontro en el path:%s\n", fpath);
+			return (fpath);
 		}
-			//search_in_path(token, command);
-			printf("the token is %s\n",token);
+		token = strtok(NULL, ":");
 	}
 	return (NULL);
 }

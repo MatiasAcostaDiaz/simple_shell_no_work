@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #define TRUE 1
 #define FALSE 0
 #define BUFFSIZE 1024
@@ -23,6 +24,7 @@ char *full_path(char *);
 char *_strcat(char *dest, char *src);
 int search_in_path(char *path, char *command);
 char *split_path(char *command);
+void print_prompt(void);
 /**
  * struct op - Short description
  * @cmd: the name of the command
