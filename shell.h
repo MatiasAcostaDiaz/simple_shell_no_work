@@ -17,8 +17,8 @@ char **split_command(char *);
 int exc_argument(char **, char *);
 int _strcmp(char *s1, char *s2);
 void print_string(char *);
-void exit_func(void);
-void env_func(void);
+int exit_func(void);
+int env_func(void);
 void sig_handler(int);
 char *find_path(void);
 char *full_path(char *);
@@ -26,6 +26,7 @@ char *_strcat(char *dest, char *src);
 int search_in_path(char *path, char *command);
 char *split_path(char *command);
 int is_builtin(char *);
+int exec_builtin(char *);
 /**
  * struct op - Short description
  * @cmd: the name of the command
@@ -36,6 +37,6 @@ int is_builtin(char *);
 typedef struct op
 {
 	char *cmd;
-	void (*func)();
+	int (*func)();
 } op_t;
 #endif

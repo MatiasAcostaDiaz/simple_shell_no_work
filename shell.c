@@ -8,19 +8,35 @@
 int main(void)
 {
 	char *buffer, **command, *path;
-	int status;
+	int status = 1;
 	size_t buffsize = BUFFSIZE;
 
 	command = malloc(buffsize * sizeof(char));
 	signal(SIGINT, sig_handler);
-	do {
-		write(STDIN_FILENO, "$ ", 2);
-		buffer = read_command();
-		command  = split_command(buffer);
-		path = split_path(command[0]);
-		status = exc_argument(command, path);
+	while (status)
+	{
+			write(STDIN_FILENO, "$ ", 2);
+			buffer = read_command();
+		//	if (buffer[0] == -1)
+		//		break;
+			command  = split_command(buffer);
+			if (_strcmp(command[1], "builtin") != 0)
+			{
+				path = split_path(command[0]);
+				status = exc_argument(command, path);
+			}
+			
+			else
+			{
+				status = exec_builtin(command[0]);
+				if (status != 0)
+					break;
+			} 
 		}
-	while (status);
+	free(path);
+	free(command);
+	free(buffer);
+	return (0);
 }
 
 /**

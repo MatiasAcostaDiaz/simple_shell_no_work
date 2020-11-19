@@ -27,7 +27,7 @@ char *read_command(void)
 			{
 				write(1, "\n", 1);
 				free(buffer);
-				exit(EXIT_SUCCESS);
+				exit(0);
 			}
 			perror("An error ocurred");
 		}
@@ -42,7 +42,7 @@ char *read_command(void)
 
 char **split_command(char *buffer)
 {
-	int position = 0, buffsize = TOKEN_BUFFSIZE;
+	int position = 0, buffsize = TOKEN_BUFFSIZE, i;
 	char **tokens, *token;
 
 	tokens = malloc(buffsize * sizeof(char *));
@@ -63,12 +63,22 @@ char **split_command(char *buffer)
 				tokens = realloc(tokens,  buffsize * sizeof(char *));
 				if (tokens == NULL)
 				{
+					for(i = position; i > 0; i--)
+					{
+						free(tokens[i]);
+					}
+					free(tokens);
 					perror("Unable to allocate\n");
 					exit(EXIT_FAILURE);
 				}
 			}
 		token = strtok(NULL, TOKEN_DELIM);
 		}
+	}
+	else
+	{
+		tokens[position++] = token;
+		tokens[position++] = "builtin";
 	}
 	tokens[position] = NULL;
 	return (tokens);
@@ -125,7 +135,6 @@ int is_builtin(char *token)
 	{
 		if ((_strcmp(token, options[i].cmd)) == 0)
 		{
-			options[i].func();
 			return (TRUE);
 		}
 		i++;

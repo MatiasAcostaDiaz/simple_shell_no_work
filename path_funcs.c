@@ -65,9 +65,12 @@ char *split_path(char *command)
 		fpath = _strcat(fpath, command);
 		if (stat(fpath, &fileStat) == 0)
 		{
+			free(path);
 			return (fpath);
 		}
 		token = strtok(NULL, ":");
 	}
+	free(path);
+	free(fpath);
 	return (NULL);
 }
