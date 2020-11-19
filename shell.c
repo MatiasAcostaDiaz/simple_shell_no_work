@@ -7,18 +7,18 @@
 
 int main(void)
 {
-	char *buffer, **command;
+	char *buffer, **command, *path;
 	int status;
 	size_t buffsize = BUFFSIZE;
 
 	command = malloc(buffsize * sizeof(char));
-	if (signal(SIGINT, sig_handler))
-		print_prompt();
+	signal(SIGINT, sig_handler);
 	do {
-		print_prompt();
+		write(STDIN_FILENO, "$ ", 2);
 		buffer = read_command();
 		command  = split_command(buffer);
-		status = exc_argument(command);
+		path = split_path(command[0]);
+		status = exc_argument(command, path);
 		}
 	while (status);
 }
@@ -28,17 +28,9 @@ int main(void)
  * @sign: the number of the signal
  */
 
-void sig_handler(int sign)
+void sig_handler(int sig)
 {
-	write(1, "\n", 1);
-	print_prompt();
-}
-
-/**
- * print_prompt - print the prompt
- */
-
-void print_prompt(void)
-{
-	write(1, "$ ", 2);
+	(void)sig;
+	signal(SIGINT, sig_handler);
+	write(STDIN_FILENO, "\n$ ", 3);
 }

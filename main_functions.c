@@ -80,29 +80,31 @@ char **split_command(char *buffer)
  * Return: 1 or 0 if the command fail or is succesfull
  */
 
-int exc_argument(char **args)
+int exc_argument(char **args, char *path)
 {
 	pid_t pid;
 	int status;
 
 	pid = fork();
+	if (pid < 0)
+		perror("Error");
 	if (pid == 0)
 	{
-		if (execvp(args[0], args) == -1)
+		if (execve(args[0], args, environ) == -1)
+		{}
+		if (execve(path, args, environ) == -1)
 		{
-			perror("error");
+			perror("Error");
 		}
-		exit(EXIT_FAILURE);
-	} else if (pid < 0)
-	{
-		perror("error");
-	} else
-	{
-		do {
-			waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		else
+		{
+			exit(1);
+		}
 	}
-
+	else
+	{
+		wait(&status);
+	}
 	return (1);
 }
 

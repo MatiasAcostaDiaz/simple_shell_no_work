@@ -10,8 +10,6 @@ char *find_path(void)
 	int i = 0, j = 0;
 	char buffer[5];
 
-	if (buffer == NULL)
-		perror("Unable to allocate");
 	while (environ[i] != NULL)
 	{
 		for (j = 0; j < 4; j++)
@@ -62,13 +60,11 @@ char *split_path(char *command)
 	while (token != NULL)
 	{
 		fpath[0] = '\0';
-		fpath = strcat(fpath, token);
-		fpath = strcat(fpath, "/");
-		fpath = strcat(fpath, command);
-		printf("COMMAND 0 : %s and path: %s\n", command, fpath);
+		fpath = _strcat(fpath, token);
+		fpath = _strcat(fpath, "/");
+		fpath = _strcat(fpath, command);
 		if (stat(fpath, &fileStat) == 0)
 		{
-			printf("se encontro en el path:%s\n", fpath);
 			return (fpath);
 		}
 		token = strtok(NULL, ":");

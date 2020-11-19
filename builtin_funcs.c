@@ -6,10 +6,7 @@
  */
 void exit_func(void)
 {
-	//exit(0);
-	char *buffer = malloc(sizeof(char) * 1024);
-
-	buffer = split_path("ls");
+	exit(0);
 }
 
 /**
@@ -19,7 +16,7 @@ void exit_func(void)
 
 void env_func(void)
 {
-	int i;
+	int i = 0;
 
 	while (environ[i] != NULL)
 	{
