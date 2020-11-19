@@ -46,13 +46,15 @@ void print_string(char *string)
 	char *buffer;
 
 	count = _strlen(string);
-	buffer = (char *)malloc(sizeof(char) * count);
+	buffer = (char *)malloc(sizeof(char) * count + 2) ;
 	while (i < count)
 	{
 		buffer[i] = string[i];
 		i++;
 	}
-	write(1, buffer, count);
+	buffer[i++] = '\n';
+	buffer[i] = '\0';
+	write(1, buffer, count + 2);
 	free(buffer);
 }
 

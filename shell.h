@@ -14,7 +14,7 @@ extern char **environ;
 int _strlen(char *s);
 char *read_command(void);
 char **split_command(char *);
-int exc_argument(char **, char *);
+int exc_argument(char **, char *, int);
 int _strcmp(char *s1, char *s2);
 void print_string(char *);
 int exit_func(void);
@@ -27,6 +27,7 @@ int search_in_path(char *path, char *command);
 char *split_path(char *command);
 int is_builtin(char *);
 int exec_builtin(char *);
+char *is_not_atty(void);
 /**
  * struct op - Short description
  * @cmd: the name of the command

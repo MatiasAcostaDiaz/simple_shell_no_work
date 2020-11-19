@@ -5,35 +5,33 @@
  * Return: 1 or 0 if is succesfull or failed
  */
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	char *buffer, **command, *path;
-	int status = 1;
+	int status = 1, i = 0;
+	int fd, tty;
 	size_t buffsize = BUFFSIZE;
 
-	command = malloc(buffsize * sizeof(char));
 	signal(SIGINT, sig_handler);
+	if (isatty(fd) == FALSE)
+		tty = TRUE;
 	while (status)
 	{
 			write(STDIN_FILENO, "$ ", 2);
 			buffer = read_command();
-		//	if (buffer[0] == -1)
-		//		break;
-			command  = split_command(buffer);
+			command = split_command(buffer);
 			if (_strcmp(command[1], "builtin") != 0)
 			{
 				path = split_path(command[0]);
-				status = exc_argument(command, path);
+				status = exc_argument(command, path, tty);
 			}
-			
 			else
 			{
 				status = exec_builtin(command[0]);
-				if (status != 0)
+				if (status == -2)
 					break;
-			} 
+			}
 		}
-	free(path);
 	free(command);
 	free(buffer);
 	return (0);

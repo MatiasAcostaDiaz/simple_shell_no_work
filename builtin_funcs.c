@@ -16,8 +16,7 @@ int exec_builtin(char *command)
 	{
 		if ((_strcmp(command, options[i].cmd)) == 0)
 		{
-			options[i].func();
-			return (TRUE);
+			//return(options[i].func());
 		}
 		i++;
 	}
@@ -26,7 +25,7 @@ int exec_builtin(char *command)
 
 int exit_func(void)
 {
-	return (1);
+	return (-2);
 }
 
 /**
@@ -41,8 +40,18 @@ int env_func(void)
 	while (environ[i] != NULL)
 	{
 		print_string(environ[i]);
-		write(1, "\n", 1);
 		i++;
 	}
-	return (0);
+	return (TRUE);
+}
+
+char *is_not_atty(void)
+{
+	int fd;
+	size_t buffsize = BUFFSIZE;
+	char *buffer = malloc(sizeof(char) * buffsize);
+
+	read(STDOUT_FILENO, buffer, 10);
+	printf("%s\n",buffer);
+	return (buffer);
 }

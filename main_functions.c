@@ -68,6 +68,7 @@ char **split_command(char *buffer)
 						free(tokens[i]);
 					}
 					free(tokens);
+					free(token);
 					perror("Unable to allocate\n");
 					exit(EXIT_FAILURE);
 				}
@@ -90,7 +91,7 @@ char **split_command(char *buffer)
  * Return: 1 or 0 if the command fail or is succesfull
  */
 
-int exc_argument(char **args, char *path)
+int exc_argument(char **args, char *path, int tty)
 {
 	pid_t pid;
 	int status;
@@ -115,6 +116,8 @@ int exc_argument(char **args, char *path)
 	{
 		wait(&status);
 	}
+	if (tty == TRUE)
+		return (0);
 	return (1);
 }
 
@@ -141,3 +144,5 @@ int is_builtin(char *token)
 	}
 	return (FALSE);
 }
+
+
