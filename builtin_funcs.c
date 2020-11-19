@@ -1,5 +1,9 @@
 #include "shell.h"
 
+/**
+ * exit_func - exit of the program and clean the memory
+ * Return: nothing
+ */
 void exit_func(void)
 {
 	//exit(0);
@@ -7,6 +11,11 @@ void exit_func(void)
 
 	buffer = split_path("ls");
 }
+
+/**
+ * env_func - print the enviroment variables
+ * Return: nothing
+ */
 
 void env_func(void)
 {

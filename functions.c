@@ -3,9 +3,10 @@
 #define TOKEN_BUFFSIZE 64
 #define TOKEN_DELIM " \t\r\n\a"
 
-static volatile int keep_running = 1;
-
-
+/**
+ * read_command - read the command enter
+ * Return: the command
+ */
 
 char *read_command(void)
 {
@@ -32,6 +33,12 @@ char *read_command(void)
 		}
 	return (buffer);
 }
+
+/**
+ * split_command - split the command with the differents arguments
+ * @buffer: the command
+ * Return: an array with the command and parameters
+ */
 
 char **split_command(char *buffer)
 {
@@ -67,6 +74,12 @@ char **split_command(char *buffer)
 	return (tokens);
 }
 
+/**
+ * exc_argument - excecute a command
+ * @args: the command with parameters
+ * Return: 1 or 0 if the command fail or is succesfull
+ */
+
 int exc_argument(char **args)
 {
 	pid_t pid;
@@ -92,6 +105,12 @@ int exc_argument(char **args)
 
 	return (1);
 }
+
+/**
+ * is_builtin - function that compare if the command is a builtin command
+ * @token: the command
+ * Return: True(1) or false(0)
+ */
 
 int is_builtin(char *token)
 {

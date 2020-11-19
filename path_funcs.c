@@ -1,5 +1,10 @@
 #include "shell.h"
 
+/**
+ * find_path - find the path in the enviroment variables
+ * Return: the path
+ */
+
 char *find_path(void)
 {
 	int i = 0, j = 0;
@@ -20,6 +25,12 @@ char *find_path(void)
 	return (NULL);
 }
 
+/**
+ * full_path - return the path without(PATH=)
+ * @path: the path
+ * Return: the path without(PATH=)
+ */
+
 char *full_path(char *path)
 {
 	char *copy;
@@ -30,6 +41,12 @@ char *full_path(char *path)
 		copy[j] = path[i];
 	return (copy);
 }
+
+/**
+ * split_path - split the path in differents folders
+ * @command: the command to concatenate with the folders of the path
+ * Return: the folder where is the executable or NULL if is not found
+ */
 
 char *split_path(char *command)
 {

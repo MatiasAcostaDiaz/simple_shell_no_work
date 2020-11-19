@@ -1,14 +1,9 @@
 #include "shell.h"
 
-static volatile int keep_running = 1;
-
-
-void sig_handler(int sign)
-{
-	keep_running = 0;
-	write(1,"\n",1);
-	print_prompt();
-}
+/**
+ * main - entry point
+ * Return: 1 or 0 if is succesfull or failed
+ */
 
 int main(void)
 {
@@ -17,19 +12,31 @@ int main(void)
 	size_t buffsize = BUFFSIZE;
 
 	command = malloc(buffsize * sizeof(char));
-	signal(SIGINT, sig_handler);
+	if (signal(SIGINT, sig_handler))
+		print_prompt();
 	do {
-		if (keep_running = 1)
-		{
-			print_prompt();
-			keep_running = 0;
-		}
+		print_prompt();
 		buffer = read_command();
 		command  = split_command(buffer);
 		status = exc_argument(command);
 		}
 	while (status);
 }
+
+/**
+ * sig_handler - catch the ctrl + c
+ * @sign: the number of the signal
+ */
+
+void sig_handler(int sign)
+{
+	write(1, "\n", 1);
+	print_prompt();
+}
+
+/**
+ * print_prompt - print the prompt
+ */
 
 void print_prompt(void)
 {

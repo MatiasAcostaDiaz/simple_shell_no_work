@@ -33,6 +33,12 @@ int _strcmp(char *s1, char *s2)
 	return (*s1 - *s2);
 }
 
+/**
+ * print_string - print a string
+ * @string: the string
+ * Return: nothing
+ */
+
 void print_string(char *string)
 {
 	int i = 0, count = 0;
