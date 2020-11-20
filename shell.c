@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
 	char *buffer = NULL, **command = NULL, *path = NULL;
 	int status = 1, i = 0;
-	int fd, tty;
+	int fd = 0, tty = FALSE;
 	size_t buffsize = BUFFSIZE;
 
 	signal(SIGINT, sig_handler);
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 			write(STDIN_FILENO, "$ ", 2);
 			buffer = read_command();
 			if (buffer == NULL)
-				break;
+				continue;
 			command = split_command(buffer);
 			if (_strcmp(command[1], "builtin") != 0)
 			{
