@@ -35,6 +35,8 @@ char *full_path(char *path)
 	int i, j;
 
 	copy = (char *)malloc(sizeof(char) * _strlen(path));
+	if (copy == NULL)
+		exit(1);
 	for (i = 5, j = 0; path[i] != '\0'; i++, j++)
 		copy[j] = path[i];
 	return (copy);
@@ -56,7 +58,10 @@ char *split_path(char *command)
 
 	fpath = malloc(sizeof(char) * BUFFSIZE);
 	if (fpath == NULL)
+	{
+		
 		return (NULL);
+	}
 	while (token != NULL)
 	{
 		fpath[0] = '\0';

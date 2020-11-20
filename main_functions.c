@@ -63,12 +63,7 @@ char **split_command(char *buffer)
 				tokens = realloc(tokens,  buffsize * sizeof(char *));
 				if (tokens == NULL)
 				{
-					for(i = position; i > 0; i--)
-					{
-						free(tokens[i]);
-					}
 					free(tokens);
-					free(token);
 					perror("Unable to allocate\n");
 					exit(EXIT_FAILURE);
 				}
@@ -91,7 +86,7 @@ char **split_command(char *buffer)
  * Return: 1 or 0 if the command fail or is succesfull
  */
 
-int exc_argument(char **args, char *path, int tty)
+int exc_argument(char **args, char *path, char *buffer, int tty)
 {
 	pid_t pid;
 	int status;
@@ -118,6 +113,7 @@ int exc_argument(char **args, char *path, int tty)
 	}
 	if (tty == TRUE)
 		return (0);
+	clean_memory(args, path, buffer);
 	return (1);
 }
 

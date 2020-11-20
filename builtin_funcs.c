@@ -5,7 +5,7 @@
  * Return: nothing
  */
 
-int exec_builtin(char *command)
+int exec_builtin(char *command, char **args, char *buffer, char *path)
 {
 	int i = 0;
 	op_t options[] = {
@@ -16,7 +16,8 @@ int exec_builtin(char *command)
 	{
 		if ((_strcmp(command, options[i].cmd)) == 0)
 		{
-			//return(options[i].func());
+			clean_memory(args, buffer, path);
+			return(options[i].func());
 		}
 		i++;
 	}
@@ -43,15 +44,4 @@ int env_func(void)
 		i++;
 	}
 	return (TRUE);
-}
-
-char *is_not_atty(void)
-{
-	int fd;
-	size_t buffsize = BUFFSIZE;
-	char *buffer = malloc(sizeof(char) * buffsize);
-
-	read(STDOUT_FILENO, buffer, 10);
-	printf("%s\n",buffer);
-	return (buffer);
 }

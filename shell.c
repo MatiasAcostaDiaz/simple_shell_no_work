@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-	char *buffer, **command, *path;
+	char *buffer = NULL, **command = NULL, *path = NULL;
 	int status = 1, i = 0;
 	int fd, tty;
 	size_t buffsize = BUFFSIZE;
@@ -19,21 +19,21 @@ int main(int argc, char *argv[])
 	{
 			write(STDIN_FILENO, "$ ", 2);
 			buffer = read_command();
+			if (buffer == NULL)
+				break;
 			command = split_command(buffer);
 			if (_strcmp(command[1], "builtin") != 0)
 			{
 				path = split_path(command[0]);
-				status = exc_argument(command, path, tty);
+				status = exc_argument(command, path, buffer, tty);
 			}
 			else
 			{
-				status = exec_builtin(command[0]);
+				status = exec_builtin(command[0], command, path, buffer);
 				if (status == -2)
 					break;
 			}
-		}
-	free(command);
-	free(buffer);
+	}
 	return (0);
 }
 
