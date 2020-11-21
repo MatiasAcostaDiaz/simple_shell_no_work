@@ -28,6 +28,7 @@ char *split_path(char *command);
 int is_builtin(char *);
 int exec_builtin(char *, char **, char *, char *);
 char *is_not_atty(void);
+int clean_memory(char **, char *, char *, int);
 /**
  * struct op - Short description
  * @cmd: the name of the command

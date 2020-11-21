@@ -19,8 +19,12 @@ int main(int argc, char *argv[])
 	{
 			write(STDIN_FILENO, "$ ", 2);
 			buffer = read_command();
-			if (buffer == NULL)
+			if (buffer == NULL || buffer[0] == '\n')
+			{
+				if (buffer[0] == '\n')
+					free(buffer);
 				continue;
+			}
 			command = split_command(buffer);
 			if (_strcmp(command[1], "builtin") != 0)
 			{

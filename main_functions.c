@@ -63,7 +63,6 @@ char **split_command(char *buffer)
 				tokens = realloc(tokens,  buffsize * sizeof(char *));
 				if (tokens == NULL)
 				{
-					free(tokens);
 					perror("Unable to allocate\n");
 					exit(EXIT_FAILURE);
 				}
@@ -113,7 +112,7 @@ int exc_argument(char **args, char *path, char *buffer, int tty)
 	}
 	if (tty == TRUE)
 		return (0);
-	clean_memory(args, path, buffer);
+	clean_memory(args, path, buffer, FALSE);
 	return (1);
 }
 

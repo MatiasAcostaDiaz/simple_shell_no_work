@@ -8,7 +8,7 @@
 char *find_path(void)
 {
 	int i = 0, j = 0;
-	char buffer[5];
+	char buffer[5] = "INIT\0";
 
 	while (environ[i] != NULL)
 	{
@@ -31,8 +31,8 @@ char *find_path(void)
 	
 char *full_path(char *path)
 {
-	char *copy;
-	int i, j;
+	char *copy = NULL;
+	int i = 0, j = 0;
 
 	copy = (char *)malloc(sizeof(char) * _strlen(path));
 	if (copy == NULL)
@@ -50,7 +50,7 @@ char *full_path(char *path)
 
 char *split_path(char *command)
 {
-	char *token = NULL, *fpath, *path;
+	char *token = NULL, *fpath = NULL, *path = NULL;
 	struct stat fileStat;
 
 	path = find_path();
@@ -70,7 +70,8 @@ char *split_path(char *command)
 		fpath = _strcat(fpath, command);
 		if (stat(fpath, &fileStat) == 0)
 		{
-		  return (fpath);
+			free(path);
+			return (fpath);
 		}
 		token = strtok(NULL, ":");
 	}

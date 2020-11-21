@@ -5,7 +5,7 @@
  * Return: nothing
  */
 
-int exec_builtin(char *command, char **args, char *buffer, char *path)
+int exec_builtin(char *command, char **args, char *path, char *buffer)
 {
 	int i = 0;
 	op_t options[] = {
@@ -16,7 +16,7 @@ int exec_builtin(char *command, char **args, char *buffer, char *path)
 	{
 		if ((_strcmp(command, options[i].cmd)) == 0)
 		{
-			clean_memory(args, buffer, path);
+			clean_memory(args, path, buffer, TRUE);
 			return(options[i].func());
 		}
 		i++;
