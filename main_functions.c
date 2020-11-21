@@ -51,6 +51,12 @@ char **split_command(char *buffer)
 		perror("Unable to allocate\n");
 		exit(EXIT_FAILURE);
 	}
+	while (buffer[0] ==  32)
+	{
+		if(buffer[0] == '\0')
+			return (NULL);
+		buffer++;
+	}
 	token = strtok(buffer, TOKEN_DELIM);
 	while (token != NULL)
 		{

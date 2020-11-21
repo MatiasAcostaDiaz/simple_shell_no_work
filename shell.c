@@ -26,6 +26,8 @@ int main(int argc, char *argv[])
 				continue;
 			}
 			command = split_command(buffer);
+			if (command[0] == NULL)
+				continue;
 			if (is_builtin(command[0]) == FALSE)
 			{
 				path = split_path(command[0]);
