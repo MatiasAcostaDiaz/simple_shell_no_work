@@ -5,18 +5,18 @@
  * Return: nothing
  */
 
-int exec_builtin(char *command, char **args, char *path, char *buffer)
+int exec_builtin(char **command, char *path, char *buffer)
 {
 	int i = 0;
 	op_t options[] = {
-	{"exit", exit_func}, {"env", env_func}, {NULL, NULL}
+	{"exit", exit_func}, {"env", env_func}, {"cd", cd_func}, {NULL, NULL}
 	};
 
 	while (options[i].cmd != NULL)
 	{
-		if ((_strcmp(command, options[i].cmd)) == 0)
+		if ((_strcmp(command[0], options[i].cmd)) == 0)
 		{
-			clean_memory(args, path, buffer, TRUE);
+			clean_memory(command, path, buffer, TRUE);
 			return(options[i].func());
 		}
 		i++;
@@ -43,5 +43,11 @@ int env_func(void)
 		print_string(environ[i]);
 		i++;
 	}
+	return (TRUE);
+}
+
+int cd_func(void)
+{
+	printf("cd func\n");
 	return (TRUE);
 }

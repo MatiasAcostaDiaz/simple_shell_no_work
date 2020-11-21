@@ -26,9 +26,10 @@ char *_strcat(char *dest, char *src);
 int search_in_path(char *path, char *command);
 char *split_path(char *command);
 int is_builtin(char *);
-int exec_builtin(char *, char **, char *, char *);
+int exec_builtin(char **, char *, char *);
 char *is_not_atty(void);
 int clean_memory(char **, char *, char *, int);
+int cd_func(void);
 /**
  * struct op - Short description
  * @cmd: the name of the command

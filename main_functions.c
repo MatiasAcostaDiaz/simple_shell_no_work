@@ -52,9 +52,7 @@ char **split_command(char *buffer)
 		exit(EXIT_FAILURE);
 	}
 	token = strtok(buffer, TOKEN_DELIM);
-	if (is_builtin(token) == FALSE)
-	{
-		while (token != NULL)
+	while (token != NULL)
 		{
 			tokens[position++] = token;
 			if (position >= buffsize)
@@ -69,12 +67,6 @@ char **split_command(char *buffer)
 			}
 		token = strtok(NULL, TOKEN_DELIM);
 		}
-	}
-	else
-	{
-		tokens[position++] = token;
-		tokens[position++] = "builtin";
-	}
 	tokens[position] = NULL;
 	return (tokens);
 }
@@ -126,7 +118,7 @@ int is_builtin(char *token)
 {
 	int i = 0;
 	op_t options[] = {
-	{"exit", exit_func}, {"env", env_func}, {NULL, NULL}
+	{"exit", exit_func}, {"env", env_func}, {"cd", cd_func}, {NULL, NULL}
 	};
 
 	while (options[i].cmd != NULL)

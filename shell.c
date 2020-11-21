@@ -26,14 +26,14 @@ int main(int argc, char *argv[])
 				continue;
 			}
 			command = split_command(buffer);
-			if (_strcmp(command[1], "builtin") != 0)
+			if (is_builtin(command[0]) == FALSE)
 			{
 				path = split_path(command[0]);
 				status = exc_argument(command, path, buffer, tty);
 			}
 			else
 			{
-				status = exec_builtin(command[0], command, path, buffer);
+				status = exec_builtin(command, path, buffer);
 				if (status == -2)
 					break;
 			}
