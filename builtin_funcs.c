@@ -52,7 +52,7 @@ int env_func(char **command, int *exit_status)
 int cd_func(char **command, int *exit_status)
 {
 	char *home = NULL;
-
+	
 	if (command[1] == NULL)
 	{
 			home = obtain_home();
@@ -60,7 +60,6 @@ int cd_func(char **command, int *exit_status)
 				perror("error");
 			free(home);
 	}
-	
 	else if (chdir(command[1]) == -1)
 		perror("error");
 	return (TRUE);
