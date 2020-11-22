@@ -42,7 +42,7 @@ char *read_command(void)
 
 char **split_command(char *buffer)
 {
-	int position = 0, buffsize = TOKEN_BUFFSIZE, i;
+	int position = 0, buffsize = TOKEN_BUFFSIZE;
 	char **tokens, *token;
 
 	tokens = malloc(buffsize * sizeof(char *));
@@ -71,6 +71,7 @@ char **split_command(char *buffer)
 					exit(EXIT_FAILURE);
 				}
 			}
+		
 		token = strtok(NULL, TOKEN_DELIM);
 		}
 	tokens[position] = NULL;

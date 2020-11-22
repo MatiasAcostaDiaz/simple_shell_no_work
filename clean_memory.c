@@ -1,6 +1,6 @@
 #include "shell.h"
 
-int clean_memory(char **command, char *path, char *buffer, int flag)
+void clean_memory(char **command, char *path, char *buffer, int flag)
 {
 	free(command);
 	if (flag == FALSE)

@@ -17,8 +17,8 @@ char **split_command(char *);
 int exc_argument(char **, char *, char *, int);
 int _strcmp(char *s1, char *s2);
 void print_string(char *);
-int exit_func(void);
-int env_func(void);
+int exit_func(char **, int *);
+int env_func(char **, int *);
 void sig_handler(int);
 char *find_path(void);
 char *full_path(char *);
@@ -26,10 +26,13 @@ char *_strcat(char *dest, char *src);
 int search_in_path(char *path, char *command);
 char *split_path(char *command);
 int is_builtin(char *);
-int exec_builtin(char **, char *, char *);
+int exec_builtin(char **, char *, char *, int *);
 char *is_not_atty(void);
-int clean_memory(char **, char *, char *, int);
-int cd_func(void);
+void clean_memory(char **, char *, char *, int);
+int cd_func(char **, int *);
+char *obtain_home(void);
+int is_a_number(char *);
+int string_to_int(char *);
 /**
  * struct op - Short description
  * @cmd: the name of the command
@@ -40,6 +43,6 @@ int cd_func(void);
 typedef struct op
 {
 	char *cmd;
-	int (*func)();
+	int (*func)(char **, int *);
 } op_t;
 #endif

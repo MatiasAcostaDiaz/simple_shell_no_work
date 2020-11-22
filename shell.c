@@ -5,18 +5,19 @@
  * Return: 1 or 0 if is succesfull or failed
  */
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	char *buffer = NULL, **command = NULL, *path = NULL;
-	int status = 1, i = 0;
-	int fd = 0, tty = FALSE;
-	size_t buffsize = BUFFSIZE;
+	int status = 1;
+	int fd = 0, tty = FALSE, stat = 0;
+	int *exit_status = &stat;
 
 	signal(SIGINT, sig_handler);
-	if (isatty(fd) == FALSE)
-		tty = TRUE;
+/*	if (isatty(fd) == FALSE)
+		tty = TRUE; */
 	while (status)
 	{
+			if (isatty(fd) == TRUE)
 			write(STDIN_FILENO, "$ ", 2);
 			buffer = read_command();
 			if (buffer == NULL || buffer[0] == '\n')
@@ -35,12 +36,13 @@ int main(int argc, char *argv[])
 			}
 			else
 			{
-				status = exec_builtin(command, path, buffer);
+				status = exec_builtin(command, path, buffer, exit_status);
+				clean_memory(command, path, buffer, TRUE);
 				if (status == -2)
 					break;
 			}
 	}
-	return (0);
+	return (stat);
 }
 
 /**

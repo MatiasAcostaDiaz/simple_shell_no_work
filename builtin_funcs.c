@@ -5,7 +5,7 @@
  * Return: nothing
  */
 
-int exec_builtin(char **command, char *path, char *buffer)
+int exec_builtin(char **command, char *path, char *buffer, int *exit_status)
 {
 	int i = 0;
 	op_t options[] = {
@@ -16,16 +16,19 @@ int exec_builtin(char **command, char *path, char *buffer)
 	{
 		if ((_strcmp(command[0], options[i].cmd)) == 0)
 		{
-			clean_memory(command, path, buffer, TRUE);
-			return(options[i].func());
+			return(options[i].func(command, exit_status));
 		}
 		i++;
 	}
 	return (FALSE);
 }
 
-int exit_func(void)
+int exit_func(char **command, int *exit_status)
 {
+	if (command[1] == NULL)
+		return (0);
+	if (is_a_number(command[1]) == TRUE)
+		*exit_status = string_to_int(command[1]);
 	return (-2);
 }
 
@@ -34,7 +37,7 @@ int exit_func(void)
  * Return: nothing
  */
 
-int env_func(void)
+int env_func(char **command, int *exit_status)
 {
 	int i = 0;
 
@@ -46,8 +49,19 @@ int env_func(void)
 	return (TRUE);
 }
 
-int cd_func(void)
+int cd_func(char **command, int *exit_status)
 {
-	printf("cd func\n");
+	char *home = NULL;
+
+	if (command[1] == NULL)
+	{
+			home = obtain_home();
+			if (chdir(home) == -1)
+				perror("error");
+			free(home);
+	}
+	
+	else if (chdir(command[1]) == -1)
+		perror("error");
 	return (TRUE);
 }
