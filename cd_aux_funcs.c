@@ -1,5 +1,10 @@
 #include "shell.h"
 
+/**
+ * obtain_home - obtain home from the enviroment variables
+ * Return: the home var
+ */
+
 char *obtain_home(void)
 {
 	int i = 0, j = 0;
@@ -18,6 +23,12 @@ char *obtain_home(void)
 	return (NULL);
 
 }
+
+/**
+ * full_home - Return the home var without the test "HOME="
+ * @home: home var
+ * Return: Return the home var without the test "HOME="
+ */
 
 char *full_home(char *home)
 {

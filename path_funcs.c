@@ -28,7 +28,7 @@ char *find_path(void)
  * @path: the path
  * Return: the path without(PATH=)
  */
-	
+
 char *full_path(char *path)
 {
 	char *copy = NULL;
@@ -55,11 +55,9 @@ char *split_path(char *command)
 
 	path = find_path();
 	token = strtok(path, ":");
-
-      	fpath = malloc(sizeof(char) * BUFFSIZE);
+	fpath = malloc(sizeof(char) * BUFFSIZE);
 	if (fpath == NULL)
 	{
-		
 		return (NULL);
 	}
 	while (token != NULL)

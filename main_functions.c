@@ -53,38 +53,40 @@ char **split_command(char *buffer)
 	}
 	while (buffer[0] ==  32)
 	{
-		if(buffer[0] == '\0')
+		if (buffer[0] == '\0')
 			return (NULL);
 		buffer++;
 	}
 	token = strtok(buffer, TOKEN_DELIM);
 	while (token != NULL)
+	{
+		tokens[position++] = token;
+		if (position >= buffsize)
 		{
-			tokens[position++] = token;
-			if (position >= buffsize)
+			buffsize += TOKEN_BUFFSIZE;
+			tokens = realloc(tokens,  buffsize * sizeof(char *));
+			if (tokens == NULL)
 			{
-				buffsize += TOKEN_BUFFSIZE;
-				tokens = realloc(tokens,  buffsize * sizeof(char *));
-				if (tokens == NULL)
-				{
-					perror("Unable to allocate\n");
-					exit(EXIT_FAILURE);
-				}
+				perror("Unable to allocate\n");
+				exit(EXIT_FAILURE);
 			}
-		
-		token = strtok(NULL, TOKEN_DELIM);
 		}
+		token = strtok(NULL, TOKEN_DELIM);
+	}
 	tokens[position] = NULL;
 	return (tokens);
 }
 
 /**
  * exc_argument - excecute a command
- * @args: the command with parameters
+ * @command: the command with parameters
+ * @path: the path of the command
+ * @buffer: the string of the command with the parameters
+ * @tty: flag if is tty or not
  * Return: 1 or 0 if the command fail or is succesfull
  */
 
-int exc_argument(char **args, char *path, char *buffer, int tty)
+int exc_argument(char **command, char *path, char *buffer, int tty)
 {
 	pid_t pid;
 	int status;
@@ -94,9 +96,9 @@ int exc_argument(char **args, char *path, char *buffer, int tty)
 		perror("Error");
 	if (pid == 0)
 	{
-		if (execve(args[0], args, environ) == -1)
+		if (execve(command[0], command, environ) == -1)
 		{}
-		if (execve(path, args, environ) == -1)
+		if (execve(path, command, environ) == -1)
 		{
 			perror("Error");
 		}
@@ -111,7 +113,7 @@ int exc_argument(char **args, char *path, char *buffer, int tty)
 	}
 	if (tty == TRUE)
 		return (0);
-	clean_memory(args, path, buffer, FALSE);
+	clean_memory(command, path, buffer, FALSE);
 	return (1);
 }
 

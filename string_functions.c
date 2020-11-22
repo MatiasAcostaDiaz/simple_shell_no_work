@@ -45,7 +45,7 @@ void print_string(char *string)
 	char *buffer;
 
 	count = _strlen(string);
-	buffer = (char *)malloc(sizeof(char) * count + 2) ;
+	buffer = (char *)malloc(sizeof(char) * count + 2);
 	while (i < count)
 	{
 		buffer[i] = string[i];
