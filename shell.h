@@ -7,6 +7,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#define O_EX_STAT 3
+#define GETPID 2
 #define TRUE 1
 #define FALSE 0
 #define BUFFSIZE 1024
@@ -33,6 +35,7 @@ int cd_func(char **, int *);
 char *obtain_home(void);
 int is_a_number(char *);
 int string_to_int(char *);
+int is_var_replacement(char **);
 /**
  * struct op - Short description
  * @cmd: the name of the command

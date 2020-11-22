@@ -1,5 +1,11 @@
 #include "shell.h"
 
+/**
+ * is_a_number - 
+ *
+ *
+ */
+
 int is_a_number(char *buffer)
 {
 	int i = 0, count = 0;
@@ -15,15 +21,20 @@ int is_a_number(char *buffer)
 			break;
 	}
 	if (i != count)
-		return(FALSE);
+		return (FALSE);
 	else
 		return (TRUE);
 }
 
+/**
+ * string_to_int - convert a string number in int
+ * @buffer: the string number
+ * Return: the number
+ */
 int string_to_int(char *buffer)
 {
 	int i = 0, count = 0, pow = 1, tot = 0;
-	
+
 	count = _strlen(buffer);
 	for (i = 0; i < count - 1; i++)
 		pow *= 10;

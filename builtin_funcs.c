@@ -26,8 +26,8 @@ int exec_builtin(char **command, char *path, char *buffer, int *exit_status)
 int exit_func(char **command, int *exit_status)
 {
 	if (command[1] == NULL)
-		return (0);
-	if (is_a_number(command[1]) == TRUE)
+		*exit_status = 1;
+	else if (is_a_number(command[1]) == TRUE)
 		*exit_status = string_to_int(command[1]);
 	return (-2);
 }

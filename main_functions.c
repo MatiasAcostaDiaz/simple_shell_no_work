@@ -84,34 +84,39 @@ char **split_command(char *buffer)
  * Return: 1 or 0 if the command fail or is succesfull
  */
 
-int exc_argument(char **args, char *path, char *buffer, int tty)
+int exc_argument(char **command, char *path, char *buffer, int tty)
 {
 	pid_t pid;
-	int status;
+	int status, var = 0;
 
 	pid = fork();
+	var = is_var_replacement(command);
 	if (pid < 0)
 		perror("Error");
-	if (pid == 0)
+	if (pid == 0 && var == 0)
 	{
-		if (execve(args[0], args, environ) == -1)
-		{}
-		if (execve(path, args, environ) == -1)
-		{
-			perror("Error");
-		}
-		else
-		{
-			exit(1);
-		}
+			if (execve(command[0], command, environ) == -1)
+			{}
+			if (execve(path, command, environ) == -1)
+			{
+				perror("Error");
+			}
+			else
+			{
+				exit(1);
+			}
 	}
 	else
 	{
+		if (var == O_EX_STAT)
+			printf("0\n");
+		else if (var == GETPID)
+			printf("%d", pid);
 		wait(&status);
 	}
 	if (tty == TRUE)
 		return (0);
-	clean_memory(args, path, buffer, FALSE);
+	clean_memory(command, path, buffer, FALSE);
 	return (1);
 }
 
