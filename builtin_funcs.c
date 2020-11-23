@@ -57,6 +57,7 @@ int env_func(char **command, int *exit_status)
 	while (environ[i] != NULL)
 	{
 		print_string(environ[i]);
+		write(1, "\n", 1);	
 		i++;
 	}
 	*exit_status = 0;

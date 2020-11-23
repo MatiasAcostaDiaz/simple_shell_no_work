@@ -89,22 +89,26 @@ char **split_command(char *buffer)
 int exc_argument(char **command, char *path, char *buffer, int tty)
 {
 	pid_t pid;
-	int status;
+	int status, error = 0;
 
 	pid = fork();
 	if (pid < 0)
 		perror("Error");
 	if (pid == 0)
 	{
-		if (execve(command[0], command, environ) == -1)
-		{}
-		if (execve(path, command, environ) == -1)
+		if (execve(command[0], command, environ) == -1 && execve(path, command, environ) == -1)
 		{
-			perror("Error");
-		}
-		else
-		{
-			exit(1);
+			if (command[0][0] == '/')
+			{
+				print_string("-hsh: /: is a directory\n");
+				exit(126);
+			}
+			else
+			{
+				print_string(command[0]);
+				print_string(": command not found\n");
+				exit(127);
+			}
 		}
 	}
 	else

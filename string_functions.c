@@ -51,9 +51,8 @@ void print_string(char *string)
 		buffer[i] = string[i];
 		i++;
 	}
-	buffer[i++] = '\n';
 	buffer[i] = '\0';
-	write(1, buffer, count + 2);
+	write(1, buffer, count);
 	free(buffer);
 }
 
