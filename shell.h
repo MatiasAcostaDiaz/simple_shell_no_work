@@ -36,6 +36,8 @@ char *obtain_home(void);
 int is_a_number(char *);
 int string_to_int(char *);
 int is_echo(char **);
+char *get_pid(char *);
+char *get_status(char *);
 /**
  * struct op - Short description
  * @cmd: the name of the command

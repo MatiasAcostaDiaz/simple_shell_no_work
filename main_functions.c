@@ -43,7 +43,7 @@ char *read_command(void)
 char **split_command(char *buffer)
 {
 	int position = 0, buffsize = TOKEN_BUFFSIZE, echo_flag = FALSE;
-	char **tokens, *token;
+	char **tokens, *token, *procid, *status;
 
 	tokens = malloc(buffsize * sizeof(char *));
 	if (tokens == NULL)
@@ -67,6 +67,10 @@ char **split_command(char *buffer)
 			if (is_var_rep(token) == GETPID)
 			{
 				tokens[position++] = 
+			}
+			else if (is_var_rep(token) == GETSTATUS)
+			{
+				tokens[position++] = get_status(token);
 			}
 		}
 		else
@@ -92,7 +96,7 @@ char **split_command(char *buffer)
  * @command: the command with parameters
  * @path: the path of the command
  * @buffer: the string of the command with the parameters
- * @tty: flag if is tty or not
+ * @tty: flag if is tty or nota			
  * Return: 1 or 0 if the command fail or is succesfull
  */
 

@@ -47,3 +47,11 @@ int string_to_int(char *buffer)
 	}
 	return (tot);
 }
+
+char *pid_to_string(pid_t pid)
+{
+	char *buffer;
+
+	buffer = malloc(sizeof(char) * 64);
+	
+}
