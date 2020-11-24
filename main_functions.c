@@ -42,7 +42,7 @@ char *read_command(void)
 
 char **split_command(char *buffer)
 {
-	int position = 0, buffsize = TOKEN_BUFFSIZE;
+	int position = 0, buffsize = TOKEN_BUFFSIZE, echo_flag = FALSE;
 	char **tokens, *token;
 
 	tokens = malloc(buffsize * sizeof(char *));
@@ -57,10 +57,20 @@ char **split_command(char *buffer)
 			return (NULL);
 		buffer++;
 	}
+	if (is_echo(token) == TRUE)
+		echo_flag = TRUE;
 	token = strtok(buffer, TOKEN_DELIM);
-	while (token != NULL)
+	while (token != NULL && token[0] != '#')
 	{
-		tokens[position++] = token;
+		if (echo_flag == TRUE && position >= 1)
+		{
+			if (is_var_rep(token) == GETPID)
+			{
+				tokens[position++] = 
+			}
+		}
+		else
+			tokens[position++] = token;
 		if (position >= buffsize)
 		{
 			buffsize += TOKEN_BUFFSIZE;
@@ -98,10 +108,15 @@ int exc_argument(char **command, char *path, char *buffer, int tty)
 	{
 		if (execve(command[0], command, environ) == -1 && execve(path, command, environ) == -1)
 		{
-			if (command[0][0] == '/')
+			if (command[0][0] == '/' && command[0][1] == '\0')
 			{
 				print_string("-hsh: /: is a directory\n");
 				exit(126);
+			}
+			else if (command[0][0] == '.' && command[0][1] == '\0')
+			{
+				print_string("-hsh: .: filename argument required\n.: usage: . filename [arguments]");
+				exit(2);
 			}
 			else
 			{
