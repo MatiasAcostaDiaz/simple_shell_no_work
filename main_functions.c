@@ -89,7 +89,7 @@ char **split_command(char *buffer)
 int exc_argument(char **command, char *path, char *buffer, int tty)
 {
 	pid_t pid;
-	int status, error = 0;
+	int status;
 
 	pid = fork();
 	if (pid < 0)

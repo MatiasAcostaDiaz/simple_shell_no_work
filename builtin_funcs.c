@@ -16,6 +16,8 @@ int exec_builtin(char **command, char *path, char *buffer, int *exit_status)
 	{"exit", exit_func}, {"env", env_func}, {"cd", cd_func}, {NULL, NULL}
 	};
 
+	(void)path;
+	(void)buffer;
 	while (options[i].cmd != NULL)
 	{
 		if ((_strcmp(command[0], options[i].cmd)) == 0)
@@ -54,6 +56,7 @@ int env_func(char **command, int *exit_status)
 {
 	int i = 0;
 
+	(void)command;
 	while (environ[i] != NULL)
 	{
 		print_string(environ[i]);
