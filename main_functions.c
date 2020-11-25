@@ -61,7 +61,7 @@ char **split_command(char *buffer)
 	while (token != NULL)
 	{
 		tokens[position++] = token;
-		if (position >= buffsize)
+		/*if (position >= buffsize)
 		{
 			buffsize += TOKEN_BUFFSIZE;
 			tokens = realloc(tokens,  buffsize * sizeof(char *));
@@ -70,7 +70,7 @@ char **split_command(char *buffer)
 				perror("Unable to allocate\n");
 				exit(EXIT_FAILURE);
 			}
-		}
+		} */
 		token = strtok(NULL, TOKEN_DELIM);
 	}
 	tokens[position] = NULL;
